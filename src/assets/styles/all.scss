@@ -1,0 +1,186 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #fff;
+$background-color: #e4ccfe;
+$boder-color: green;
+$text-color: #000;
+$text-color-headr: green;
+
+* {
+    margin: 0;
+    padding: 0;
+    color: $text-color;
+    text-decoration: none;
+}
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+#headerContainer {
+    .headerContent {
+        min-height: 90px;
+        background-image: url(../images/backgroud.jpg);
+        background-repeat: no-repeat;
+        overflow: hidden;
+        background-size: 100%;
+        h1 {
+            text-align: center;
+            padding: 20px;
+            color: $text-color;
+        }
+    }
+    .menuContent  {
+        min-height: 33px;
+        background-color: $background-color;
+        border: 1px solid $boder-color;
+        .nav-header {
+            ul {
+                li{
+                    float: left;
+                    border-right: 1px solid $boder-color;
+                    list-style: none;
+                    a {
+                        float: left;
+                        display: block;
+                        color: black;
+                        text-align: center;
+                        padding: 6px 16px;
+                        text-decoration: none;
+                        font-size: 17px;
+                    }
+                    a:hover {
+                        background-color: #ddd;
+                        color: black;
+                      }
+                    
+                    a.active {
+                        background-color: #4CAF50;
+                        color: white;
+                      }
+                }
+
+                li:last-child {
+                    border-right: 0;
+                }
+            }
+
+        }
+    }
+}
+
+#mainContainer {
+    min-height: 800px;
+    border: 1px solid $boder-color; 
+    padding: 5px;
+    @media (max-width: 960px) {
+        display: flex;
+        width: 100%;
+        min-height: 50px;
+        padding: 0;
+        flex-direction: column-reverse;
+    } 
+    .sidebarContent {
+        float: left;
+        width: 280px;
+        @media (max-width: 960px) {
+            display: block;
+            width: 98%;
+            margin: 1%;
+        } 
+        .subSidebar {
+            margin-top: 10px;
+            .sub-sidebar-title {
+                text-align: center;
+                background-color: $background-color;
+                border: 1px solid $boder-color; 
+                width: 100%;
+                padding: 5px 0;
+            }
+            .sub-sidebar-content {
+                min-height: 200px;
+                width: 100%;
+                padding: 5px 0;
+                border: 1px solid $boder-color; 
+            }
+        }
+        .subSidebar:first-child {
+            margin-top: 0px;
+        }
+    } 
+    .mainContent {
+        float: right;
+        width: 655px;
+        @media (max-width: 960px) {
+            display: block;
+            width: 98%;
+            padding: 5px 1%;
+        }  
+        .input-content {
+            form {
+                display: grid;
+                width: 100%;
+                grid-template-columns: 80% 20%;
+            }
+            .input-form {
+                height: 36px;
+                font-size: 17px;
+                border: 1px solid;
+                padding: 3px;
+                @media (max-width: 960px) {
+                    padding: 4px 2%;
+                }  
+                @media (max-width: 768px) {
+                    padding: 4px 2%;
+                }
+            }
+            .button-form {
+                height: 45px;
+                padding: 3px;
+                font-size: 17px;
+            }
+        }
+        .output-content {
+            padding: 5px 0;
+            .sub-item {
+                list-style: none;
+                background-color: $primary-color;
+                margin-bottom: 5px;
+                display: grid;
+                grid-template-columns: 60% 20% 20%;
+                .item {
+                    background-color: #4CAF50; 
+                    border: 1px solid $boder-color;  
+                    color: $text-color; 
+                    padding: 10px 24px; 
+                    float: left; 
+                    @media (max-width: 960px) {
+                        padding: 11px 0px;
+                    }
+                }
+                .item-button {
+                    text-align: center;
+                    border: 1px solid $boder-color; 
+                    background-color: $background-color; 
+                    text-align: center;
+                }
+                .item-button::after {
+                    box-shadow: 1px 1px 1px;
+                }
+                .item-content{
+                    padding: 10px;
+                }
+            }
+        }
+    } 
+}
+
+#footerContainer {
+    background-color: $background-color;
+    p {
+        text-align: center;
+        padding: 15px;
+    }
+}

@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  text-decoration: none; }
+
+body {
+  font: 100% Helvetica, sans-serif;
+  color: #fff;
+  max-width: 960px;
+  margin: 0 auto; }
+
+#headerContainer .headerContent {
+  min-height: 90px;
+  background-image: url(../images/backgroud.jpg);
+  background-repeat: no-repeat;
+  overflow: hidden;
+  background-size: 100%; }
+  #headerContainer .headerContent h1 {
+    text-align: center;
+    padding: 20px;
+    color: #000; }
+#headerContainer .menuContent {
+  min-height: 33px;
+  background-color: #e4ccfe;
+  border: 1px solid green; }
+  #headerContainer .menuContent .nav-header ul li {
+    float: left;
+    border-right: 1px solid green;
+    list-style: none; }
+    #headerContainer .menuContent .nav-header ul li a {
+      float: left;
+      display: block;
+      color: black;
+      text-align: center;
+      padding: 6px 16px;
+      text-decoration: none;
+      font-size: 17px; }
+    #headerContainer .menuContent .nav-header ul li a:hover {
+      background-color: #ddd;
+      color: black; }
+    #headerContainer .menuContent .nav-header ul li a.active {
+      background-color: #4CAF50;
+      color: white; }
+  #headerContainer .menuContent .nav-header ul li:last-child {
+    border-right: 0; }
+
+#mainContainer {
+  min-height: 800px;
+  border: 1px solid green;
+  padding: 5px; }
+  @media (max-width: 960px) {
+    #mainContainer {
+      display: flex;
+      width: 100%;
+      min-height: 50px;
+      padding: 0;
+      flex-direction: column-reverse; } }
+  #mainContainer .sidebarContent {
+    float: left;
+    width: 280px; }
+    @media (max-width: 960px) {
+      #mainContainer .sidebarContent {
+        display: block;
+        width: 98%;
+        margin: 1%; } }
+    #mainContainer .sidebarContent .subSidebar {
+      margin-top: 10px; }
+      #mainContainer .sidebarContent .subSidebar .sub-sidebar-title {
+        text-align: center;
+        background-color: #e4ccfe;
+        border: 1px solid green;
+        width: 100%;
+        padding: 5px 0; }
+      #mainContainer .sidebarContent .subSidebar .sub-sidebar-content {
+        min-height: 200px;
+        width: 100%;
+        padding: 5px 0;
+        border: 1px solid green; }
+    #mainContainer .sidebarContent .subSidebar:first-child {
+      margin-top: 0px; }
+  #mainContainer .mainContent {
+    float: right;
+    width: 655px; }
+    @media (max-width: 960px) {
+      #mainContainer .mainContent {
+        display: block;
+        width: 98%;
+        padding: 5px 1%; } }
+    #mainContainer .mainContent .input-content form {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 80% 20%; }
+    #mainContainer .mainContent .input-content .input-form {
+      height: 36px;
+      font-size: 17px;
+      border: 1px solid;
+      padding: 3px; }
+      @media (max-width: 960px) {
+        #mainContainer .mainContent .input-content .input-form {
+          padding: 4px 2%; } }
+      @media (max-width: 768px) {
+        #mainContainer .mainContent .input-content .input-form {
+          padding: 4px 2%; } }
+    #mainContainer .mainContent .input-content .button-form {
+      height: 45px;
+      padding: 3px;
+      font-size: 17px; }
+    #mainContainer .mainContent .output-content {
+      padding: 5px 0; }
+      #mainContainer .mainContent .output-content .sub-item {
+        list-style: none;
+        background-color: #fff;
+        margin-bottom: 5px;
+        display: grid;
+        grid-template-columns: 60% 20% 20%; }
+        #mainContainer .mainContent .output-content .sub-item .item {
+          background-color: #4CAF50;
+          border: 1px solid green;
+          color: #000;
+          padding: 10px 24px;
+          float: left; }
+          @media (max-width: 960px) {
+            #mainContainer .mainContent .output-content .sub-item .item {
+              padding: 11px 0px; } }
+        #mainContainer .mainContent .output-content .sub-item .item-button {
+          text-align: center;
+          border: 1px solid green;
+          background-color: #e4ccfe;
+          text-align: center; }
+        #mainContainer .mainContent .output-content .sub-item .item-button::after {
+          box-shadow: 1px 1px 1px; }
+        #mainContainer .mainContent .output-content .sub-item .item-content {
+          padding: 10px; }
+
+#footerContainer {
+  background-color: #e4ccfe; }
+  #footerContainer p {
+    text-align: center;
+    padding: 15px; }
+
+/*# sourceMappingURL=all.css.map */
