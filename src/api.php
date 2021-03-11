@@ -56,7 +56,7 @@ function get()
 
 function set()
 {
-    global $db;
+    global $db, $redis;
     header("Content-Type: application/json");
     try {
         if (!empty($_POST['content']) && isset($_POST['content'])) {
