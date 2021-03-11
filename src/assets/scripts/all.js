@@ -108,11 +108,17 @@ onClickEven('#content-output', 'click', '.d-content', function myFunction() {
 });
 
 function functionDone(data, myThis) {
-    if (data.done == 'undone') {
-        myThis.textContent = "Undone";
+    var getText = myThis.textContent;
+    if (data.success === true) {
+        if(getText === "Done"){
+            done = "Undone";
+        }else{
+            done = "Done";
+        }
+        myThis.textContent = done;
         alert(data.messenger);
     } else {
-        myThis.textContent = "Done";
+        myThis.textContent = getText;
         alert(data.messenger);
     }
 }
