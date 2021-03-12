@@ -170,6 +170,9 @@ function functionAdd() {
                     elementHTML.className = "sub-item";
                     insertHTML[0].parentNode.insertBefore(elementHTML, insertHTML[0]);
                 }
+
+                value.value = "";
+                value.focus();
             }else{
                 alert(data.messenger);
             }
@@ -181,6 +184,4 @@ function functionAdd() {
         });
 
     }
-    value.value = "";
-    value.focus();
 }
