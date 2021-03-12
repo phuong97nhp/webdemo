@@ -4,54 +4,38 @@ $db = new Database();
 $redis = new Redis();
 $redis->connect('redis', 6379);
 
+function reponse($success = true, $code = 200, $messenger = "", $data = null,  $error = null){
+    $reponse = [
+        'success' => $success,
+        'code' => $code,
+        'messenger' => $messenger ,
+        'data' => $data,
+        'error' => $error
+    ];
+    echo json_encode($reponse);
+    die();
+}
+
 function get()
 {
     header('Content-Type: application/json');
     global $db, $redis;
     try {
         if(!empty($valueData = $redis->get('dataTodo'))){
-            $reponse = [
-                'success' => true,
-                'code' => 200,
-                'messenger' => "Trả về dữ liệu thành công.",
-                'data' => unserialize($valueData),
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(true, 200, "Trả về dữ liệu thành công.", unserialize($valueData));
         }
 
         $getSql = "SELECT * FROM db_todo ORDER BY id DESC LIMIT 50";
         if(!empty($getData = $db->get($getSql))){
-            $reponse = [
-                'success' => true,
-                'code' => 200,
-                'messenger' => "Trả về dữ liệu thành công.",
-                'data' => $getData,
-                'error' => null
-            ];
             $redis->set("dataTodo", serialize($getData));
             $redis->expire("dataTodo", 60); // thời gian hiệu lực của từng giây
+            reponse(true, 200, "Trả về dữ liệu thành công.", $getData, null);
         }else{
-            $reponse = [
-                'success' => false,
-                'code' => 201,
-                'messenger' => "Bạn không có dữ liệu.",
-                'data' => null,
-                'error' => null
-            ];
+            reponse(false, 201, "Bạn không có dữ liệu.");
         }
     } catch (\Throwable $th) {
-        $reponse = [
-            'success' => false,
-            'code' => 500,
-            'messenger' => 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu',
-            'data' => null,
-            'error' => null
-        ];
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
     }
-    echo json_encode($reponse);
-    die();
 }
 
 function set()
@@ -67,52 +51,21 @@ function set()
         }
 
         if($content === "") {
-            $reponse = [
-                'success' => false,
-                'code' => 405,
-                'messenger' => "Dữ liệu của bạn là không hợp lệ.",
-                'data' => null,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 405, "Dữ liệu của bạn là không hợp lệ.");
         } 
 
         $sql = "INSERT INTO db_todo (content, done) VALUES ('".$content."', 'done')";
         $intIdResuft = (int) $db->queryResult($sql);
         if (empty($intIdResuft)) {
-            $arrayData = get('dataTodo')['data'];
-            $reponse = [
-                'success' => false,
-                'code' => 202,
-                'messenger' => "Cập nhật dữ liệu không thành công.",
-                'data' => $arrayData,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 202, "Cập nhật dữ liệu không thành công.");
         } else {
             $arrayData = ['id'=> $intIdResuft, 'content'=>$content, 'done'=> 'done'];
-            $reponse = [
-                'success' => true,
-                'code' => 201,
-                'messenger' => "Thêm dữ liệu thành công.",
-                'data' => $arrayData,
-                'error' => null
-            ];
             $redis->delete('dataTodo');
+            reponse(true, 200, "Thêm dữ liệu thành công.", $arrayData);
         }
     } catch (\Throwable $th) {
-        $reponse = [
-            'success' => false,
-            'code' => 500,
-            'messenger' => 'Trạng thái lỗi.',
-            'data' => null,
-            'error' => null
-        ];
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
     }
-    echo json_encode($reponse);
-    die();
 }
 
 function delete()
@@ -123,62 +76,26 @@ function delete()
         $intId = (int) trim($_GET['id']); !empty($intId) > 0;
         if(empty($intId))
         {
-            $reponse = [
-                'success' => false,
-                'code' => 405,
-                'messenger' => "Dữ liệu của bạn không hợp lệ.",
-                'data' => null,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 405, "Dữ liệu của bạn không hợp lệ.");
         }
 
         $stringSqlId = "SELECT done FROM db_todo WHERE id=$intId";
         if(empty($db->get($stringSqlId)))
         {
-            $reponse = [
-                'success' => false,
-                'code' => 405,
-                'messenger' => "Dữ liệu không tồn tại.",
-                'data' => null,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 405, "Dữ liệu không tồn tại.");
         }
 
         $sql = "DELETE FROM db_todo WHERE id = $intId";
         if ($db->query($sql)) {
-            $reponse = [
-                'success' => true,
-                'code' => 200,
-                'messenger' => "Xóa dữ liệu thành công",
-                'data' => null,
-                'error' => null
-            ];
             $redis->delete("dataTodo");
+            reponse(true, 200, "Xóa dữ liệu thành công");
         } else {
-            $reponse = [
-                'success' => false,
-                'code' => 202,
-                'messenger' => "Xóa dữ liệu không thành công",
-                'data' => null,
-                'error' => null
-            ];
+            reponse(false, 202, "Xóa dữ liệu không thành công");
         }
         
     } catch (\Throwable $th) {
-        $reponse = [
-            'success' => false,
-            'code' => 500,
-            'messenger' => 'Trạng thái lỗi.',
-            'data' => null,
-            'error' => null
-        ];
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
     }
-    echo json_encode($reponse);
-    die();
 }
 
 function done()
@@ -189,64 +106,27 @@ function done()
         $intId = (int) trim($_GET['id']); !empty($intId) > 0;
         if(empty($intId))
         {
-            $reponse = [
-                'success' => false,
-                'code' => 405,
-                'messenger' => "Dữ liệu của bạn không hợp lệ.",
-                'data' => null,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 405, "Dữ liệu của bạn không hợp lệ.");
         }
 
         $stringSqlId = "SELECT done FROM db_todo WHERE id=$intId";
         $stringDone = (string) $db->get($stringSqlId)[0]['done'];
         if($stringDone === "")
         {
-            $reponse = [
-                'success' => false,
-                'code' => 405,
-                'messenger' => "Dữ liệu không tồn tại.",
-                'data' => null,
-                'error' => null
-            ];
-            echo json_encode($reponse);
-            die();
+            reponse(false, 405, "Dữ liệu không tồn tại.");
         }
 
         $stringDone = $stringDone == 'done'?'undone' : 'done';
         $sql = "UPDATE db_todo SET done = '$stringDone' WHERE id = $intId";
         if ($db->query($sql)) {
-            $reponse = [
-                'success' => true,
-                'code' => 200,
-                'messenger' => "Cập nhật lại trạng thái thành công",
-                'data' => null,
-                'error' => null,
-                'done' => $stringDone
-            ];
             $redis->delete("dataTodo");
+            reponse(true, 200, "Cập nhật lại trạng thái thành công", $stringDone);
         }else {
-            $reponse = [
-                'success' => false,
-                'code' => 201,
-                'messenger' => "Cập nhật lại trạng thái không thành công",
-                'data' => null,
-                'error' => null
-            ];
+            reponse(false, 201, "Cập nhật lại trạng thái không thành công");
         }
     } catch (\Throwable $th) {
-        $reponse = [
-            'success' => false,
-            'code' => 500,
-            'messenger' => 'Trạng thái lỗi.',
-            'data' => null,
-            'error' => null
-        ];
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
     }
-    echo json_encode($reponse);
-    die();
 }
 
 $action = $_GET['value'];

@@ -109,7 +109,7 @@ onClickEven('#content-output', 'click', '.d-content', function myFunction() {
 
 function functionDone(data, myThis) {
     if (data.success === true) {
-        if(data.done === "done"){
+        if(data.data === "done"){
             var done = "Done";
         }else{
             var done = "Undone";
@@ -163,10 +163,15 @@ function functionAdd() {
             if (data.success == true) {
                 alert(data.messenger);
                 if(data.data.id != ""){
+                    if(data.data.done == 'done'){
+                        var done = "Done";
+                    }else{
+                        var done = "Undone";
+                    }
                     var insertHTML = document.getElementsByClassName("sub-item");
                     var elementHTML = document.createElement('li');
                     elementHTML.setAttribute('idValue', data.data.id );
-                    elementHTML.innerHTML = '<div class = "item-content item"> ' + data.data.content + ' </div><a href="javascript:void(0);" class="item-button item  d-content">' + data.data.done + '</a ><a href = "javascript:void(0);" class = "item-button item  delete-content" > Delete </a>';
+                    elementHTML.innerHTML = '<div class = "item-content item"> ' + data.data.content + ' </div><a href="javascript:void(0);" class="item-button item  d-content">' + done + '</a ><a href = "javascript:void(0);" class = "item-button item  delete-content" > Delete </a>';
                     elementHTML.className = "sub-item";
                     insertHTML[0].parentNode.insertBefore(elementHTML, insertHTML[0]);
                 }
