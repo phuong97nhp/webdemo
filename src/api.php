@@ -21,7 +21,7 @@ function get()
             die();
         }
 
-        $getSql = "SELECT * FROM db_todo ORDER BY id DESC";
+        $getSql = "SELECT * FROM db_todo ORDER BY id DESC LIMIT 50";
         if(!empty($getData = $db->get($getSql))){
             $reponse = [
                 'success' => true,
