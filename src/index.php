@@ -61,4 +61,11 @@
 </body>
 <!-- <script src="assets/scripts/jquery/jquery-3.5.1.slim.min.js"></script> -->
 <script src="assets/scripts/all.js"></script>
+<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+<!-- <script>
+  $( function() {
+    $( "#content-output" ).sortable();
+    $( "#content-output" ).disableSelection();
+  } );
+  </script> -->
 </html>

@@ -14,6 +14,12 @@ class Database{
     return $result;
   }
 
+  public function queryResult($sql){
+    $this->conn->query($sql);
+    $result = $this->conn->insert_id;
+    return $result;
+  }
+  
   function get($sql)
   {
     $result=mysqli_query($this->conn,$sql);

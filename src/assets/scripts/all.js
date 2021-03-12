@@ -162,7 +162,14 @@ function functionAdd() {
         .then(data => {
             if (data.success == true) {
                 alert(data.messenger);
-                functionList(data);
+                if(data.data.id != ""){
+                    var insertHTML = document.getElementsByClassName("sub-item");
+                    var elementHTML = document.createElement('li');
+                    elementHTML.setAttribute('idValue', data.data.id );
+                    elementHTML.innerHTML = '<div class = "item-content item"> ' + data.data.content + ' </div><a href="javascript:void(0);" class="item-button item  d-content">' + data.data.done + '</a ><a href = "javascript:void(0);" class = "item-button item  delete-content" > Delete </a>';
+                    elementHTML.className = "sub-item";
+                    insertHTML[0].parentNode.insertBefore(elementHTML, insertHTML[0]);
+                }
             }else{
                 alert(data.messenger);
             }
@@ -173,11 +180,6 @@ function functionAdd() {
             }
         });
 
-    var insertHTML = document.getElementsByClassName("sub-item");
-    var elementHTML = document.createElement('li');
-    elementHTML.innerHTML = '<div class = "item-content item"> ' + value.value + ' </div><a href="javascript:void(0);" class="item-button item  d-content">Done</a ><a href = "javascript:void(0);" class = "item-button item  delete-content" > Delete </a>';
-    elementHTML.className = "sub-item";
-        insertHTML[0].parentNode.insertBefore(elementHTML, insertHTML[0]);
     }
     value.value = "";
     value.focus();

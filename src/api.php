@@ -21,7 +21,7 @@ function get()
             die();
         }
 
-        $getSql = "SELECT * FROM db_todo WHERE 1 ORDER BY id DESC";
+        $getSql = "SELECT * FROM db_todo ORDER BY id DESC";
         if(!empty($getData = $db->get($getSql))){
             $reponse = [
                 'success' => true,
@@ -79,24 +79,25 @@ function set()
         } 
 
         $sql = "INSERT INTO db_todo (content, done) VALUES ('".$content."', 'done')";
-        $getSql = "SELECT * FROM db_todo WHERE 1 ORDER BY id DESC";
-        if (!$db->query($sql)) {
-            $valueData = $redis->get('dataTodo');
+        $intIdResuft = (int) $db->queryResult($sql);
+        if (empty($intIdResuft)) {
+            $arrayData = get('dataTodo')['data'];
             $reponse = [
                 'success' => false,
                 'code' => 202,
                 'messenger' => "Cập nhật dữ liệu không thành công.",
-                'data' => $valueData,
+                'data' => $arrayData,
                 'error' => null
             ];
             echo json_encode($reponse);
             die();
         } else {
+            $arrayData = ['id'=> $intIdResuft, 'content'=>$content, 'done'=> 'done'];
             $reponse = [
                 'success' => true,
                 'code' => 201,
                 'messenger' => "Thêm dữ liệu thành công.",
-                'data' => $db->get($getSql),
+                'data' => $arrayData,
                 'error' => null
             ];
             $redis->delete('dataTodo');
@@ -119,8 +120,8 @@ function delete()
     global $db, $redis;
     header('Content-Type: application/json');
     try {
-        $id = (int) trim($_GET['id']); !empty($id) > 0;
-        if(empty($id))
+        $intId = (int) trim($_GET['id']); !empty($intId) > 0;
+        if(empty($intId))
         {
             $reponse = [
                 'success' => false,
@@ -133,8 +134,8 @@ function delete()
             die();
         }
 
-        $checkSqlId = "SELECT done FROM db_todo WHERE id=$id";
-        if(empty($db->get($checkSqlId)))
+        $stringSqlId = "SELECT done FROM db_todo WHERE id=$intId";
+        if(empty($db->get($stringSqlId)))
         {
             $reponse = [
                 'success' => false,
@@ -147,7 +148,7 @@ function delete()
             die();
         }
 
-        $sql = "DELETE FROM db_todo WHERE id = $id";
+        $sql = "DELETE FROM db_todo WHERE id = $intId";
         if ($db->query($sql)) {
             $reponse = [
                 'success' => true,
@@ -185,8 +186,8 @@ function done()
     global $db, $redis;
     header('Content-Type: application/json');
     try {
-        $id = (int) trim($_GET['id']); !empty($id) > 0;
-        if(empty($id))
+        $intId = (int) trim($_GET['id']); !empty($intId) > 0;
+        if(empty($intId))
         {
             $reponse = [
                 'success' => false,
@@ -199,7 +200,7 @@ function done()
             die();
         }
 
-        $stringSqlId = "SELECT done FROM db_todo WHERE id=$id";
+        $stringSqlId = "SELECT done FROM db_todo WHERE id=$intId";
         $stringDone = (string) $db->get($stringSqlId)[0]['done'];
         if($stringDone === "")
         {
@@ -215,7 +216,7 @@ function done()
         }
 
         $stringDone = $stringDone == 'done'?'undone' : 'done';
-        $sql = "UPDATE db_todo SET done = '$stringDone' WHERE id = $id";
+        $sql = "UPDATE db_todo SET done = '$stringDone' WHERE id = $intId";
         if ($db->query($sql)) {
             $reponse = [
                 'success' => true,
