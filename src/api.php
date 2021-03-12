@@ -31,7 +31,7 @@ function get()
                 'error' => null
             ];
             $redis->set("dataTodo", serialize($getData));
-            $redis->expire("dataTodo", 20); // thời gian hiệu lực của từng giây
+            $redis->expire("dataTodo", 60); // thời gian hiệu lực của từng giây
         }else{
             $reponse = [
                 'success' => false,
@@ -66,7 +66,7 @@ function set()
             $content = (string) trim($content['content']); $content !== "";
         }
 
-        if($content !== "") {
+        if($content === "") {
             $reponse = [
                 'success' => false,
                 'code' => 405,
@@ -99,6 +99,7 @@ function set()
                 'data' => $db->get($getSql),
                 'error' => null
             ];
+            $redis->delete('dataTodo');
         }
     } catch (\Throwable $th) {
         $reponse = [
@@ -115,7 +116,7 @@ function set()
 
 function delete()
 {
-    global $db;
+    global $db, $redis;
     header('Content-Type: application/json');
     try {
         $id = (int) trim($_GET['id']); !empty($id) > 0;
@@ -132,6 +133,20 @@ function delete()
             die();
         }
 
+        $checkSqlId = "SELECT done FROM db_todo WHERE id=$id";
+        if(empty($db->get($checkSqlId)))
+        {
+            $reponse = [
+                'success' => false,
+                'code' => 405,
+                'messenger' => "Dữ liệu không tồn tại.",
+                'data' => null,
+                'error' => null
+            ];
+            echo json_encode($reponse);
+            die();
+        }
+
         $sql = "DELETE FROM db_todo WHERE id = $id";
         if ($db->query($sql)) {
             $reponse = [
@@ -141,6 +156,7 @@ function delete()
                 'data' => null,
                 'error' => null
             ];
+            $redis->delete("dataTodo");
         } else {
             $reponse = [
                 'success' => false,
@@ -166,7 +182,7 @@ function delete()
 
 function done()
 {   
-    global $db;
+    global $db, $redis;
     header('Content-Type: application/json');
     try {
         $id = (int) trim($_GET['id']); !empty($id) > 0;
@@ -183,20 +199,38 @@ function done()
             die();
         }
 
-        $sql = "UPDATE db_todo SET done= IF(done = 'done', 'undone', 'done') WHERE id = $id";
+        $stringSqlId = "SELECT done FROM db_todo WHERE id=$id";
+        $stringDone = (string) $db->get($stringSqlId)[0]['done'];
+        if($stringDone === "")
+        {
+            $reponse = [
+                'success' => false,
+                'code' => 405,
+                'messenger' => "Dữ liệu không tồn tại.",
+                'data' => null,
+                'error' => null
+            ];
+            echo json_encode($reponse);
+            die();
+        }
+
+        $stringDone = $stringDone == 'done'?'undone' : 'done';
+        $sql = "UPDATE db_todo SET done = '$stringDone' WHERE id = $id";
         if ($db->query($sql)) {
             $reponse = [
                 'success' => true,
                 'code' => 200,
                 'messenger' => "Cập nhật lại trạng thái thành công",
                 'data' => null,
-                'error' => null
+                'error' => null,
+                'done' => $stringDone
             ];
+            $redis->delete("dataTodo");
         }else {
             $reponse = [
                 'success' => false,
                 'code' => 201,
-                'messenger' => "Trang thai ban cap nhat khong thanh cong",
+                'messenger' => "Cập nhật lại trạng thái không thành công",
                 'data' => null,
                 'error' => null
             ];

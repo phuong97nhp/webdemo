@@ -108,17 +108,15 @@ onClickEven('#content-output', 'click', '.d-content', function myFunction() {
 });
 
 function functionDone(data, myThis) {
-    var getText = myThis.textContent;
     if (data.success === true) {
-        if(getText === "Done"){
-            done = "Undone";
+        if(data.done === "done"){
+            var done = "Done";
         }else{
-            done = "Done";
+            var done = "Undone";
         }
         myThis.textContent = done;
         alert(data.messenger);
     } else {
-        myThis.textContent = getText;
         alert(data.messenger);
     }
 }
@@ -165,6 +163,8 @@ function functionAdd() {
             if (data.success == true) {
                 alert(data.messenger);
                 functionList(data);
+            }else{
+                alert(data.messenger);
             }
         })
         .catch((error) => {
