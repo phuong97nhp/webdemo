@@ -3,13 +3,25 @@ networks:
   dockerrize_network:
     driver: bridge
 services:
-  php:
+  phpfpm:
     build:
       context: ./phpfpm
       dockerfile: Dockerfile
-    ports:
-      - "9000:9000"
-    container_name: dockerize_php
+    # ports:
+    #   - "9000:9000"
+    container_name: dockerize_php_phpfpm
+    working_dir: /var/www/myapp
+    networks: 
+      - dockerrize_network
+    volumes: 
+      - "./src:/var/www/myapp"
+  phpcli:
+    build:
+      context: ./phpcli
+      dockerfile: Dockerfile
+    # ports:
+    #   - "9000:9000"
+    container_name: dockerize_php_cli
     working_dir: /var/www/myapp
     networks: 
       - dockerrize_network
