@@ -87,6 +87,36 @@ body {
         display: block;
         width: 98%;
         padding: 5px 1%; } }
+    #mainContainer .mainContent .input-content-send-mail .form-content {
+      display: grid;
+      width: 100%;
+      grid-template-columns: 100%; }
+      #mainContainer .mainContent .input-content-send-mail .form-content .input-form {
+        height: 36px;
+        font-size: 17px;
+        border: 1px solid;
+        padding: 3px;
+        margin-bottom: 5px; }
+        @media (max-width: 960px) {
+          #mainContainer .mainContent .input-content-send-mail .form-content .input-form {
+            padding: 4px 2%; } }
+        @media (max-width: 768px) {
+          #mainContainer .mainContent .input-content-send-mail .form-content .input-form {
+            padding: 4px 2%; } }
+      #mainContainer .mainContent .input-content-send-mail .form-content .textarea-form {
+        font-size: 17px;
+        border: 1px solid;
+        padding: 3px;
+        margin-bottom: 5px; }
+    #mainContainer .mainContent .input-content-send-mail .button-form {
+      height: 45px;
+      padding: 3px;
+      margin: 0 auto;
+      font-size: 17px;
+      text-align: center;
+      display: block;
+      width: 200px;
+      background-color: #e4ccfe; }
     #mainContainer .mainContent .input-content form {
       display: grid;
       width: 100%;

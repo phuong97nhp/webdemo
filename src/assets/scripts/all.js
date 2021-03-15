@@ -1,51 +1,4 @@
-// $(document).ready(function() {
-
-//     var getUrl = 'http://localhost:8081/api.php?value=get';
-//     var deleteUrl = 'http://localhost:8081/api.php?value=delete';
-//     var setUrl = 'http://localhost:8081/api.php?value=set';
-
-//     $('#button-content').on('click', function() {
-//         var getContent = $('#input-content').val();
-//         if (getContent !== '') {
-
-//             $.ajax({
-//                 url: 'http://localhost:8081/api.php?value=set',
-//                 type: 'POST',
-//                 data: { 'content': getContent },
-//                 dataType: 'json',
-//                 success: function(data) {
-//                     if (data.constructor === String) {
-//                         data = JSON.parse(data);
-//                     }
-
-//                     if (data.status) {
-//                         numberRestEmailFooter = data.rest_email;
-//                         $('#numberRestEmailFooter').text(data.rest_email)
-//                     }
-//                 }
-//             });
-
-//             var contentHtml = '<li class="sub-item"><div class="item-content item">' + getContent + '</div><a href="javascript:void(0);" class="item-button item  d-content">Done</a><a href="javascript:void(0);" class="item-button item  delete-content">Delete</a></li>';
-//             $('body').find('#content-output').prepend(contentHtml);
-//             $('#input-content').val('');
-//             $('#input-content').focus();
-//         }
-//     });
-
-//     $("body").delegate('.delete-content', 'click', function(event) {
-//         $(this).parent('.sub-item').remove();
-//     });
-
-//     $("body").delegate('.d-content', 'click', function(event) {
-//         var getContentButton = $(this).text();
-//         if (getContentButton == 'Done') {
-//             $(this).text('Undone');
-//         } else {
-//             $(this).text('Done');
-//         }
-//     });
-// });
-
+if(page == "trang-chu"){
 
 var getUrl = 'http://localhost:8081/api.php?value=get';
 var deleteUrl = 'http://localhost:8081/api.php?value=delete';
@@ -188,5 +141,36 @@ function functionAdd() {
             }
         });
 
+    }
+}
+}
+
+if(page == "gui-mai"){
+    var sendUrl = 'http://localhost:8081/mail.php';
+
+    // gui mail
+    var buttonSend = document.getElementById("button-send");
+    buttonSend.addEventListener('click', functionSend, false);
+    function functionSend(){
+        var mail = document.getElementById("mail").value;
+        var title = document.getElementById("title").value;
+        var content = document.getElementById("content").value;
+
+        fetch(sendUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({mail:mail, title:title, content:content}),
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert("Success");
+        })
+        .catch((error) => {
+            if (data.success == false) {
+                alert(data.messenger);
+            }
+        });
     }
 }

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/styles/all.css">
     <title>Website demo</title>
+    <script>
+        var page = "trang-chu";
+    </script>
 </head>
 <body>
     <header id="headerContainer">
@@ -19,6 +22,7 @@
                     <li><a href="#">Danh muc</a></li>
                     <li><a href="#">Tin tuc</a></li>
                     <li><a href="#">Gioi thieu</a></li>
+                    <li><a href="/send.php">Gửi mail</a></li>
                 </ul>
             </nav>
         </div>

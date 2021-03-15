@@ -118,6 +118,43 @@ body {
             width: 98%;
             padding: 5px 1%;
         }  
+        .input-content-send-mail {
+            .form-content {
+                display: grid;
+                width: 100%;
+                grid-template-columns: 100%;
+
+                .input-form {
+                    height: 36px;
+                    font-size: 17px;
+                    border: 1px solid;
+                    padding: 3px;
+                    margin-bottom: 5px;
+                    @media (max-width: 960px) {
+                        padding: 4px 2%;
+                    }  
+                    @media (max-width: 768px) {
+                        padding: 4px 2%;
+                    }
+                }
+                .textarea-form {
+                    font-size: 17px;
+                    border: 1px solid;
+                    padding: 3px;
+                    margin-bottom: 5px;
+                }
+            }
+            .button-form {
+                height: 45px;
+                padding: 3px;
+                margin: 0 auto;
+                font-size: 17px;
+                text-align: center;
+                display: block;
+                width: 200px;
+                background-color: $background-color;
+            }
+        }
         .input-content {
             form {
                 display: grid;

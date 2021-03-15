@@ -34,7 +34,7 @@ function get()
             reponse(false, 201, "Bạn không có dữ liệu.");
         }
     } catch (\Throwable $th) {
-        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu.');
     }
 }
 
@@ -64,7 +64,7 @@ function set()
             reponse(true, 200, "Thêm dữ liệu thành công.", $arrayData);
         }
     } catch (\Throwable $th) {
-        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu.');
     }
 }
 
@@ -94,7 +94,7 @@ function delete()
         }
         
     } catch (\Throwable $th) {
-        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu.');
     }
 }
 
@@ -125,7 +125,7 @@ function done()
             reponse(false, 201, "Cập nhật lại trạng thái không thành công");
         }
     } catch (\Throwable $th) {
-        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu');
+        reponse(false, 500, 'Bạn gặp lỗi nghiêm trọng trong quá trình cập nhật dữ liệu.');
     }
 }
 
