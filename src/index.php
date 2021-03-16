@@ -22,7 +22,7 @@
                     <li><a href="#">Danh muc</a></li>
                     <li><a href="#">Tin tuc</a></li>
                     <li><a href="#">Gioi thieu</a></li>
-                    <li><a href="/send.php">Gửi mail</a></li>
+                    <li><a href="/gui-mail.php">Gửi mail</a></li>
                 </ul>
             </nav>
         </div>
