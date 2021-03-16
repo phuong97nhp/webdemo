@@ -3,7 +3,4 @@ RUN  docker-php-ext-install pdo_mysql \
     && docker-php-ext-enable pdo_mysql \
     && docker-php-ext-install mysqli \
     && pecl install redis \
-    && docker-php-ext-enable redis \
-    && apt install php7.4-cli \
-    && cd ..\src\ 
-    && php send.php
+    && docker-php-ext-enable redis 
